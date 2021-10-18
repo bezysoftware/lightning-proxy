@@ -1,12 +1,15 @@
 #!/bin/bash
 
-export DOMAIN="bezysoftware.cz"
-export USERNAME="bezysoftware"
-
 if [ "$EUID" -ne 0 ]
   then echo "This script needs to be run as root"
   exit
 fi
+
+read -p "Enter your domain (example.com)" DOMAIN
+read -p "Enter your ssh username (satoshi)" USERNAME
+
+export DOMAIN
+export USERNAME
 
 HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
 
