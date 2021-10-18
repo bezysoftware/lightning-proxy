@@ -23,7 +23,7 @@ You're also going to need your own domain, e.g. `example.com` which you point to
 
 For simplicity I'm going to assume you already have a domain pointed to your VM in Azure and an Umbrel instance running on Raspberry Pi.
 
-There are 2 things needed
+There are 3 things needed
 
 1. Open a remote SSH tunnel from your Raspberry to VM mapping the port 10009 (used by Zap). Set this up as a service which will keep the SSH alive and auto start after boot.
 2. Force LND to regenerate its certificate with our custom domain
