@@ -1,0 +1,11 @@
+[Unit]
+Description=AutoSSH tunnel service for LND on port 10009
+After=network.target
+
+[Service]
+User=$SUDO_USER
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M 0 -N -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -o StrictHostKeyChecking=accept-new -R 0.0.0.0:10009:localhost:10009 $USERNAME@$DOMAIN
+
+[Install]
+WantedBy=multi-user.target
