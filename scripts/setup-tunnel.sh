@@ -5,8 +5,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-read -p "Enter your domain (example.com)" DOMAIN
-read -p "Enter your ssh username (satoshi)" USERNAME
+read -p "Enter your domain (example.com): " DOMAIN
+read -p "Enter your ssh username (satoshi): " USERNAME
 
 export DOMAIN
 export USERNAME
@@ -20,8 +20,8 @@ cat ~/.ssh/id_rsa.pub
 read -p "Press enter to continue"
 
 # Auto SSH
-echo "Installing autossh"
-apt-get install autossh
+echo "Installing packages"
+apt-get -y install autossh qrencode
 
 echo "Copying the service definition"
 envsubst < ./autossh-tunnel.service > /etc/systemd/system/autossh-tunnel.service
@@ -41,3 +41,13 @@ else
   LND_CONTAINER=$(docker ps | grep "lnd:" | cut -d" " -f1)
   docker restart $LND_CONTAINER
 fi
+
+#Final connection string
+CERT="$(cat ~/umbrel/lnd/tls.cert | sed '1,1d' | sed '$ d' | tr '/+' '_-' | tr -d '=\n')"
+MACAROON="$(cat ~/umbrel/lnd/data/chain/bitcoin/mainnet/admin.macaroon | base64 | tr '/+' '_-' | tr -d '=\n')"
+CONNECTION_STRING="lndconnect://$DOMAIN:10009?cert=$CERT&macaroon=$MACAROON"
+
+qrencode -m 2 -s 2 -t ansiutf8 "$CONNECTION_STRING"
+
+echo "Scan the QR code above or use this connection string:"
+echo $CONNECTION_STRING

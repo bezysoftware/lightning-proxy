@@ -34,16 +34,14 @@ There are 2 things needed
 1. Generates a new SSH key pair and prints the public key you need to permission on the VM
 2. Sets up a [AutoSSH](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/) service which tunnels the 10009 port to the VM
 3. Forces LND to regenerate its certificate and include your domain in it (it restarts LND's docker container)
+4. Gives you a LND connection string / QR code you can scan with your wallet
+
+![QR Code](img/qr.png)
 
 #3 is covered by `scripts/setup-server.sh`. It also installs `net-tools` so you can use `netstat` to monitor bound ports:
 ```bash
 sudo netstat -tulpn | grep LISTEN
 ``` 
-
-## Connection string
-Last piece is getting the connection string for Zap. Assuming you're using Umbrel, it's as simple as navigating to *Connect Wallet* page and selecting **Zap (Desktop)** (make sure you use Desktop which includes the LND certificate). There you just replace "umbrel.local" with your custom domain (e.g. example.com).
-
-![Connect](img/umbrel-connect.png)
 
 ## Thoughts, issues, ideas?
 If you have any concerns or ideas how to automate the whole process even more (auto provision custom VM, generate connection string in the script etc.) raise an issue / PR.
