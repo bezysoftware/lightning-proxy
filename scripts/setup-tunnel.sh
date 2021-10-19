@@ -5,8 +5,13 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-read -p "Enter your domain (example.com): " DOMAIN
-read -p "Enter your ssh username (satoshi): " USERNAME
+if [ -n "$1" ]; then
+  USERNAME=$1
+  DOMAIN=$2
+else
+  read -p "Enter your ssh username (satoshi): " USERNAME
+  read -p "Enter your domain (example.com): " DOMAIN
+fi
 
 export DOMAIN
 export USERNAME

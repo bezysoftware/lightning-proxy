@@ -8,7 +8,9 @@ You have your bitcoin/lightning node setup on your home server (Raspberry Pi) an
 
 Then you actually come to a cafe, order and want to pay. You pull out your phone, launch Zap, and wait for Tor to establish a connection. For 30s. Maybe you panic and restart the app. You wait again. People are lining up behind you. All sweaty you capitulate and end up paying by card. 
 
-Or perhaps you have your server behind a router and you don't want to setup port forwarding. Or you don't have a static IP address at all.
+Or perhaps you're not behind Tor, but have your server behind a router and you don't want to setup port forwarding. Or you don't have a static IP address at all.
+
+Or you want to use LN-URL.
 
 ## Solution
 The solution is to have a publicly accessible server with static IP that you can use to forward incoming traffic to a specific port to your home server (Raspberry). Obviously the connection needs to be initiated from your end towards the public server. Best way to do that is to use SSH. From high level it will look like this:
@@ -23,22 +25,28 @@ You're also going to need your own domain, e.g. `example.com` which you point to
 
 For simplicity I'm going to assume you already have a domain pointed to your VM in Azure and an Umbrel instance running on Raspberry Pi.
 
-There are 3 things needed
+1. Clone this repo to your Pi: 
+```bash
+ssh umbrel@umbrel.local
+git clone git@github.com:bezysoftware/lightning-proxy.git
+```
+2. Run the setup script and follow instructions
+```bash
+cd ./lightning-proxy/scripts
+sudo ./setup.sh
+```
 
-1. Open a remote SSH tunnel from your Raspberry to VM mapping the port 10009 (used by Zap). Set this up as a service which will keep the SSH alive and auto start after boot.
-2. Force LND to regenerate its certificate with our custom domain
-3. Allow forwarding ports from outside of the server (by default SSH only allows forwarding ports from the host)
-
-#1 & #2 are covered by `scripts/setup-tunnel.sh` script. It
-
-1. Generates a new SSH key pair and prints the public key you need to permission on the VM
-2. Sets up a [AutoSSH](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/) service which tunnels the 10009 port to the VM
+What it does:
+1. Generates a new SSH key pair and prints the public key you need to permission on the VM (e.g. in your Azure Portal VM Reset Password page)
+2. Sets up a [AutoSSH](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-autossh/) service which tunnels the **10009** port to the VM
 3. Forces LND to regenerate its certificate and include your domain in it (it restarts LND's docker container)
 4. Gives you a LND connection string / QR code you can scan with your wallet
 
 ![QR Code](img/qr.png)
 
-#3 is covered by `scripts/setup-server.sh`. It also installs `net-tools` so you can use `netstat` to monitor bound ports:
+5. On your proxy VM it allows forwarding ports from outside of the server (by default SSH only allows forwarding ports from localhost)
+
+It also installs `net-tools` so you can use `netstat` to monitor bound ports (useful for debugging), e.g.:
 ```bash
 sudo netstat -tulpn | grep LISTEN
 ``` 
