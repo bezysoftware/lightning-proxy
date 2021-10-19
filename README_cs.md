@@ -1,10 +1,10 @@
 # Lightning server proxy
-Pár skriptů pro zpřístupnění vašeho privátního LND server zkrze veřejný proxy server. 
+Pár skriptů pro zpřístupnění vašeho privátního LND serveru zkrze veřejný proxy server. 
 
 ## Motivace
 Představte si, že už máte rozběhnutý bitcoin/lightning node na vašem domácím serveru (třeba Raspberry Pi) a chcete k němu připoji mobilní peněženku. Je dost velká šance, že používáte něco ve stylu [Umbrelu](https://getumbrel.com/), který se o všechno stará a umožní přístup skrz onion adresu. Na mobilu si nainstauleje peněženku [Zap](https://github.com/LN-Zap/) nebo podobnou a skrze danou onion adresu s k ní přes Tor přípojíte. Všechno funguje.
 
-Pak ale při návštěvě kavárny při placení zjistíte, že připojování k síti Tor trvá nějak dlouho. Tak zkusíte aplikacu restartovat. Pořád startuje, už desítky vteřin. Za vámi se zaatím vytvořila fronta, vy zpanikaříte a raději zaplatíte kartou. 
+Pak ale při návštěvě kavárny při placení zjistíte, že připojování k síti Tor trvá nějak dlouho. Tak zkusíte aplikaci restartovat. Pořád startuje, už desítky vteřin. Za vámi se zatím vytvořila fronta, vy zpanikaříte a raději zaplatíte kartou. 
 
 Nebo prostě Tor nepoužíváte, máte node schovaný za routerem a nechcete zapínat port forwarding. Nebo prostě nemáte statickou IP adresu.
 
@@ -15,7 +15,7 @@ Jedním z řešení je mít veřejně přístupný server, který bude sloužit 
 
 ![Overview](img/overview.png)
 
-Co přesně bude váš veřejný server je na vás, v tomto příkladu používám Azure VM (e.g. [Standard_B2s](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-b-series-burstable) - 2 vcpus, 4 GiB memory ~ 28€/měsíc, ale jsou i levěnjší).
+Co přesně bude váš veřejný server je na vás, v tomto příkladu používám Azure VM (e.g. [Standard_B1s](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-b-series-burstable) - 1 vcpu, 1 GiB memory ~ 6.5€/měsíc).
 
 Taky budete potřebovat vlastní doménu, e.g. `example.com`, kterou pomocí A Recordu nasměrujete na statickou IP adresu vašeho serveru.
 

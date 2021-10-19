@@ -17,7 +17,7 @@ The solution is to have a publicly accessible server with static IP that you can
 
 ![Overview](img/overview.png)
 
-Where you get your server is up to you - one possible choice would be to use Azure VM (e.g. [Standard_B2s](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-b-series-burstable) - 2 vcpus, 4 GiB memory ~ 28€/month, but the are also cheaper options).
+Where you get your server is up to you - one possible choice would be to use Azure VM (e.g. [Standard_B1s](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes-b-series-burstable) - 1 vcpu, 4 GiB memory ~ 6.5€/month).
 
 You're also going to need your own domain, e.g. `example.com` which you point to your VM's IP **static** address (setting `A record` at your registrar's administration).
 
@@ -52,4 +52,4 @@ sudo netstat -tulpn | grep LISTEN
 ``` 
 
 ## Thoughts, issues, ideas?
-If you have any concerns or ideas how to automate the whole process even more (auto provision custom VM, generate connection string in the script etc.) raise an issue / PR.
+If you have any concerns or ideas how to automate the whole process even more (auto provision custom VM, make the script umbrel-agnostic etc.) raise an issue / PR.
