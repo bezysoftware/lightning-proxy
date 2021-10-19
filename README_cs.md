@@ -26,7 +26,7 @@ Budu předpokládat, že už máte vlastní doménu, server a Raspberry Pi na kt
 1. Git clone na váš Raspberry Pi: 
 ```bash
 ssh umbrel@umbrel.local
-git clone git@github.com:bezysoftware/lightning-proxy.git
+git clone https://github.com/bezysoftware/lightning-proxy.git
 ```
 2. Spusťte script a následujte instrukce
 ```bash

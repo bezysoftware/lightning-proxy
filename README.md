@@ -28,7 +28,7 @@ For simplicity I'm going to assume you already have a domain pointed to your VM 
 1. Clone this repo to your Pi: 
 ```bash
 ssh umbrel@umbrel.local
-git clone git@github.com:bezysoftware/lightning-proxy.git
+git clone https://github.com/bezysoftware/lightning-proxy.git
 ```
 2. Run the setup script and follow instructions
 ```bash
