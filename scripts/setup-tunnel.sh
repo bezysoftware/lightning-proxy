@@ -20,7 +20,9 @@ HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
 
 # Generate SSH pair
 ssh-keygen -t rsa -b 4096 -C "Umbrel" -f "$HOME/.ssh/id_rsa" -N ''
-echo "Use the following public key in your VM:"
+echo "******************************************************"
+echo "****Permission the following public key in your VM****"
+echo "******************************************************"
 cat ~/.ssh/id_rsa.pub
 read -p "Press enter to continue"
 
@@ -54,5 +56,7 @@ CONNECTION_STRING="lndconnect://$DOMAIN:10009?cert=$CERT&macaroon=$MACAROON"
 
 qrencode -m 2 -s 2 -t ansiutf8 "$CONNECTION_STRING"
 
-echo "Scan the QR code above or use this connection string:"
+echo "*********************************************************"
+echo "**Scan the QR code above or use this connection string:**"
+echo "*********************************************************"
 echo $CONNECTION_STRING

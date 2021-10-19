@@ -5,6 +5,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+echo "This script assumes you already have a domain pointed to your public VM (which will act as a proxy)."
+
 read -p "Enter your VM ssh username (satoshi): " VM_USERNAME
 read -p "Enter your VM domain (example.com): " VM_DOMAIN
 
