@@ -48,6 +48,7 @@ else
   sed -i.BAK "/^\[Application Options\]/a\tlsextradomain=$DOMAIN" ~/umbrel/lnd/lnd.conf
   LND_CONTAINER=$(docker ps | grep "lnd:" | cut -d" " -f1)
   docker restart $LND_CONTAINER
+  sleep 5
 fi
 
 #Final connection string
