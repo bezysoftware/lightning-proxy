@@ -34,6 +34,7 @@ echo "Copying the service definition"
 envsubst < ./autossh-tunnel.service > /etc/systemd/system/autossh-tunnel.service
 
 echo "Starting the service"
+systemctl is-active --quiet autossh-tunnel.service && systemctl stop autossh-tunnel.service
 systemctl daemon-reload
 systemctl start autossh-tunnel.service
 systemctl enable autossh-tunnel.service

@@ -8,7 +8,7 @@ fi
 echo "This script assumes you already have a domain pointed to your public VM (which will act as a proxy)."
 
 read -p "Enter your VM ssh username (satoshi): " VM_USERNAME
-read -p "Enter your VM domain (example.com): " VM_DOMAIN
+read -p "Enter your VM domain (ln.example.com): " VM_DOMAIN
 
 # run tunnel script locally on Pi
 ./setup-tunnel.sh $VM_USERNAME $VM_DOMAIN
