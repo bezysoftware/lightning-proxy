@@ -14,4 +14,5 @@ read -p "Enter your VM domain (ln.example.com): " VM_DOMAIN
 ./setup-tunnel.sh $VM_USERNAME $VM_DOMAIN
 
 # run server script remotely
-ssh -t "$VM_USERNAME@$VM_DOMAIN" "sudo bash -s" < ./setup-server.sh
+HOME="$(getent passwd $SUDO_USER | cut -d: -f6)"
+ssh -i "$HOME/.ssh/id_rsa" -t "$VM_USERNAME@$VM_DOMAIN" "sudo bash -s" < ./setup-server.sh
