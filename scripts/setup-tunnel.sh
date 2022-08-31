@@ -40,20 +40,21 @@ systemctl start autossh-tunnel.service
 systemctl enable autossh-tunnel.service
 
 #LND config
-if grep -Fxq "tlsextradomain=$DOMAIN" ~/umbrel/lnd/lnd.conf
+                                      
+if grep -Fxq "tlsextradomain=$DOMAIN" ~/umbrel/app-data/lightning/data/lnd/lnd.conf
 then
   echo "LND is already configured"
 else
   echo "Configuring LND"
-  sed -i.BAK "/^\[Application Options\]/a\tlsextradomain=$DOMAIN" ~/umbrel/lnd/lnd.conf
+  sed -i.BAK "/^\[Application Options\]/a\tlsextradomain=$DOMAIN" ~/umbrel/app-data/lightning/data/lnd/lnd.conf
   LND_CONTAINER=$(docker ps | grep "lnd:" | cut -d" " -f1)
   docker restart $LND_CONTAINER
   sleep 5
 fi
 
 #Final connection string
-CERT="$(cat ~/umbrel/lnd/tls.cert | sed '1,1d' | sed '$ d' | tr '/+' '_-' | tr -d '=\n')"
-MACAROON="$(cat ~/umbrel/lnd/data/chain/bitcoin/mainnet/admin.macaroon | base64 | tr '/+' '_-' | tr -d '=\n')"
+CERT="$(cat ~/umbrel/app-data/lightning/data/lnd/tls.cert | sed '1,1d' | sed '$ d' | tr '/+' '_-' | tr -d '=\n')"
+MACAROON="$(cat ~/umbrel/app-data/lightning/data/lnd/data/chain/bitcoin/mainnet/admin.macaroon | base64 | tr '/+' '_-' | tr -d '=\n')"
 CONNECTION_STRING="lndconnect://$DOMAIN:10009?cert=$CERT&macaroon=$MACAROON"
 
 qrencode -m 2 -s 2 -t ansiutf8 "$CONNECTION_STRING"
